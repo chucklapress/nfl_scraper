@@ -15,7 +15,7 @@ def player_scraping_view(request):
     content = requests.get(current_player).text
     souper = BeautifulSoup(content, "html.parser")
     player_stats = str(souper.find(id="main-content"))
-    return render(request,"index.html",{"current_player": current_player,"player": player, "player_stats": player_stats})
+    return render(request,"index.html",{"player": player, "player_stats": player_stats})
 
 
 
