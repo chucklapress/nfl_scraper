@@ -7,17 +7,15 @@ from bs4 import BeautifulSoup
 
 # Create your views here.
 def player_scraping_view(request):
-    player = request.GET.get('player') or "Drew Brees"
+    player = request.GET.get('player') or "Joe Flacco"
     url = "http://www.nfl.com/search?query={}".format(player)
     content = requests.get(url).text
     souper = BeautifulSoup(content, "html.parser")
-    current_player = souper.find(class_="stats").attrs["href"]
-    content = requests.get(current_player).text
+    data_table = souper.find(class_="stats").attrs["href"]
+    content = requests.get(data_table).text
     souper = BeautifulSoup(content, "html.parser")
     player_stats = str(souper.find(id="main-content"))
-    return render(request,"index.html",{"player": player, "player_stats": player_stats})
-
-
+    return render(request,"index.html",{"data_table": data_table, "player_stats": player_stats})
 
 #def player_scraping_view(request):
     #player = request.GET.get('player') or "Drew Brees"
